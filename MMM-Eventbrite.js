@@ -6,6 +6,10 @@ Module.register("MMM-Eventbrite", {
         organizerId: "52408308"
     },
 
+    getStyles: function() {
+        return ["MMM-Eventbrite.css"];
+    },
+
     currentEventIndex: 0, // Keep track of which event is currently displayed
 
     start: function() {
@@ -42,6 +46,7 @@ Module.register("MMM-Eventbrite", {
 
     getDom: function() {
         var wrapper = document.createElement("div");
+        wrapper.className = "event-module-wrapper";
         
         if (this.events.length > 0) {
             const event = this.events[this.currentEventIndex]; // Get the current event to display
@@ -65,7 +70,7 @@ Module.register("MMM-Eventbrite", {
             // Displaying the Event URL as text
             if (event.url !== "undefined") {
                 var eventUrl = document.createElement("div");
-                eventUrl.innerHTML = `URL: ${event.url}`;
+                eventUrl.innerHTML = `${event.url}`;
                 wrapper.appendChild(eventUrl);
             }
 

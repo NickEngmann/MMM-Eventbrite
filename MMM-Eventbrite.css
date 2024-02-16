@@ -1,0 +1,9 @@
+.event-module-wrapper {
+  transform: scale(1.15);
+  transform-origin: top left;
+}
+
+.event-module-wrapper img {
+  width: 460px;
+  /* Increase from 400px to accommodate the 15% scaling */
+}
