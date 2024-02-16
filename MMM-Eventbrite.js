@@ -63,7 +63,7 @@ Module.register("MMM-Eventbrite", {
                 var eventLogo = new Image();
                 eventLogo.src = event.logoOriginalUrl;
                 eventLogo.alt = "Event Logo";
-                eventLogo.style.width = "400px"; // Adjust the size as needed
+                eventLogo.style.width = "500px"; // Adjust the size as needed
                 wrapper.appendChild(eventLogo);
             }
 
@@ -80,6 +80,7 @@ Module.register("MMM-Eventbrite", {
                 qrCodeImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(event.url)}`;
                 qrCodeImage.alt = "QR Code";
                 qrCodeImage.style.paddingTop = "10px";
+                qrCodeImage.style.width = "250px";
                 wrapper.appendChild(qrCodeImage);
             }
 
