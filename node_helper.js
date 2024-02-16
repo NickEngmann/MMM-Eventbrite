@@ -1,5 +1,5 @@
 var NodeHelper = require("node_helper");
-var request = require("request"); // You might need to install the request package or use another way to perform HTTP requests
+var axios = require("axios"); // Using axios for HTTP requests
 
 module.exports = NodeHelper.create({
     start: function() {
@@ -7,18 +7,21 @@ module.exports = NodeHelper.create({
     },
 
     getEventData: function(apiKey, organizerId) {
-        var options = {
+        var config = {
+            method: 'get',
             url: `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=live`,
-            headers: {
-                'Authorization': 'Bearer ' + apiKey
+            headers: { 
+                'Authorization': 'Bearer ' + apiKey 
             }
         };
 
-        request(options, (error, response, body) => {
-            if (!error && response.statusCode == 200) {
-                var data = JSON.parse(body);
-                this.sendSocketNotification("EVENT_DATA_RESULT", data);
-            }
+        axios(config)
+        .then((response) => {
+            // Assuming the response data structure is correct
+            this.sendSocketNotification("EVENT_DATA_RESULT", response.data);
+        })
+        .catch((error) => {
+            console.log(error);
         });
     },
 
