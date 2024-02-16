@@ -3,7 +3,7 @@ Module.register("MMM-Eventbrite", {
         updateInterval: 1800000, // How often to fetch new data (in milliseconds)
         rotateInterval: 25000, // How often to switch between events (in milliseconds)
         apiKey: "",
-        organizerId: "52408308"
+        organizerId: ""
     },
 
     getStyles: function() {
@@ -29,7 +29,6 @@ Module.register("MMM-Eventbrite", {
     },
 
     socketNotificationReceived: function(notification, payload) {
-        console.log("Results",payload);
         if (notification === "EVENT_DATA_RESULT") {
             this.events = payload.events.map(event => ({
                 name: event.name.text || "undefined",
@@ -90,14 +89,14 @@ Module.register("MMM-Eventbrite", {
             var formattedStart = startDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventStart = document.createElement("div");
             eventStart.className = "event-start"; // Add class name
-            eventStart.innerHTML = `Start: ${formattedStart} EST`;
+            eventStart.innerHTML = `Start: ${formattedStart}`;
             wrapper.appendChild(eventStart);
 
             var endDateTime = new Date(event.end);
             var formattedEnd = endDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventEnd = document.createElement("div");
             eventEnd.className = "event-end"; // Add class name
-            eventEnd.innerHTML = `End: ${formattedEnd} EST`;
+            eventEnd.innerHTML = `End: ${formattedEnd}`;
             wrapper.appendChild(eventEnd);
         } else {
             wrapper.innerHTML = "Loading events...";
