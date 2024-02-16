@@ -52,31 +52,34 @@ Module.register("MMM-Eventbrite", {
             const event = this.events[this.currentEventIndex]; // Get the current event to display
 
             var eventName = document.createElement("div");
-            eventName.innerHTML = `Name: ${event.name}`;
+            eventName.className = "event-name"; // Add class name
+            eventName.innerHTML = `${event.name}`;
             wrapper.appendChild(eventName);
 
             var eventSummary = document.createElement("div");
-            eventSummary.innerHTML = `Summary: ${event.summary}`;
+            eventSummary.className = "event-summary"; // Add class name
+            eventSummary.innerHTML = `${event.summary}`;
             wrapper.appendChild(eventSummary);
 
             if (event.logoOriginalUrl !== "undefined") {
                 var eventLogo = new Image();
+                eventLogo.className = "event-logo"; // Add class name
                 eventLogo.src = event.logoOriginalUrl;
                 eventLogo.alt = "Event Logo";
                 eventLogo.style.width = "500px"; // Adjust the size as needed
                 wrapper.appendChild(eventLogo);
             }
 
-            // Displaying the Event URL as text
             if (event.url !== "undefined") {
                 var eventUrl = document.createElement("div");
+                eventUrl.className = "event-url"; // Add class name
                 eventUrl.innerHTML = `${event.url}`;
                 wrapper.appendChild(eventUrl);
             }
 
-            // QR Code for Event URL
             if (event.url !== "undefined") {
                 var qrCodeImage = new Image();
+                qrCodeImage.className = "event-qr-code"; // Add class name
                 qrCodeImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(event.url)}`;
                 qrCodeImage.alt = "QR Code";
                 qrCodeImage.style.paddingTop = "10px";
@@ -84,17 +87,17 @@ Module.register("MMM-Eventbrite", {
                 wrapper.appendChild(qrCodeImage);
             }
 
-            // Formatting the start time
             var startDateTime = new Date(event.start);
             var formattedStart = startDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventStart = document.createElement("div");
+            eventStart.className = "event-start"; // Add class name
             eventStart.innerHTML = `Start: ${formattedStart} EST`;
             wrapper.appendChild(eventStart);
 
-            // Formatting the end time
             var endDateTime = new Date(event.end);
             var formattedEnd = endDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventEnd = document.createElement("div");
+            eventEnd.className = "event-end"; // Add class name
             eventEnd.innerHTML = `End: ${formattedEnd} EST`;
             wrapper.appendChild(eventEnd);
         } else {
