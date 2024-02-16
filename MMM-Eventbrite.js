@@ -25,6 +25,7 @@ Module.register("MMM-EVENTBRITE", {
     },
 
     socketNotificationReceived: function(notification, payload) {
+        console.log("Results",payload);
         if (notification === "EVENT_DATA_RESULT") {
             this.events = payload.events.map(event => ({
                 name: event.name.text || "undefined",
