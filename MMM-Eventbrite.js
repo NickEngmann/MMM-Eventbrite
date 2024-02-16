@@ -1,4 +1,4 @@
-Module.register("MMM-EVENTBRITE", {
+Module.register("MMM-Eventbrite", {
     defaults: {
         updateInterval: 1800000, // How often to fetch new data (in milliseconds)
         rotateInterval: 25000, // How often to switch between events (in milliseconds)

@@ -2,7 +2,7 @@
   "name": "mmm-eventbrite",
   "version": "1.0.0",
   "description": "A Magic Mirror module for displaying Eventbrite events.",
-  "main": "MMM-EVENTBRITE.js",
+  "main": "MMM-Eventbrite.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
