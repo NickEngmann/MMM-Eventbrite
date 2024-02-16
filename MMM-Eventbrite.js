@@ -2,7 +2,7 @@ Module.register("MMM-Eventbrite", {
     defaults: {
         updateInterval: 1800000, // How often to fetch new data (in milliseconds)
         rotateInterval: 25000, // How often to switch between events (in milliseconds)
-        apiKey: "B3KRL5DE67LAOPZ3WQEE",
+        apiKey: "",
         organizerId: "52408308"
     },
 
