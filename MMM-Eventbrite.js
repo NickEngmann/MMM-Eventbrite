@@ -54,17 +54,29 @@ Module.register("MMM-Eventbrite", {
             eventSummary.innerHTML = `Summary: ${event.summary}`;
             wrapper.appendChild(eventSummary);
 
-            var eventLogo = new Image();
-            eventLogo.src = event.logoOriginalUrl;
-            eventLogo.alt = "Event Logo";
-            eventLogo.style.width = "400px"; // Adjust the size as needed
-            wrapper.appendChild(eventLogo);
+            if (event.logoOriginalUrl !== "undefined") {
+                var eventLogo = new Image();
+                eventLogo.src = event.logoOriginalUrl;
+                eventLogo.alt = "Event Logo";
+                eventLogo.style.width = "400px"; // Adjust the size as needed
+                wrapper.appendChild(eventLogo);
+            }
 
-            var eventUrl = document.createElement("a");
-            eventUrl.href = event.url;
-            eventUrl.innerHTML = "Event URL";
-            eventUrl.target = "_blank";
-            wrapper.appendChild(eventUrl);
+            // QR Code for Event URL
+            if (event.url !== "undefined") {
+                var qrCodeImage = new Image();
+                qrCodeImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(event.url)}`;
+                qrCodeImage.alt = "QR Code";
+                qrCodeImage.style.paddingTop = "10px";
+                wrapper.appendChild(qrCodeImage);
+            }
+
+            // Displaying the Event URL as text
+            if (event.url !== "undefined") {
+                var eventUrl = document.createElement("div");
+                eventUrl.innerHTML = `URL: ${event.url}`;
+                wrapper.appendChild(eventUrl);
+            }
 
             var eventStart = document.createElement("div");
             eventStart.innerHTML = `Start: ${event.start}`;
