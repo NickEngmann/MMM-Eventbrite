@@ -1,6 +1,11 @@
 .event-module-wrapper .event-name {
-  font-size: 1.15em;
-  /* example to increase font size */
+  font-size: 4em;
+  /* Increase the event name font size by 3x */
+}
+
+.event-module-wrapper .event-summary {
+  font-size: 2em;
+  /* Increase the event summary font size by 2x */
 }
 
 .event-module-wrapper .event-logo {
@@ -10,14 +15,15 @@
 
 .event-module-wrapper .event-qr-code {
   display: block;
-  /* ensures it's on a new line */
   margin: 10px auto;
-  /* centers the QR code */
+  /* Centers the QR code */
+  width: 250px;
+  /* Adjusted to match your JavaScript */
 }
 
 .event-module-wrapper .event-start,
 .event-module-wrapper .event-end {
+  font-size: 3em;
+  /* Increase the start and end font size by 3x */
   font-style: italic;
 }
-
-/* Add more customizations as needed */
