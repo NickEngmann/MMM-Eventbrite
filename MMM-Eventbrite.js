@@ -31,7 +31,7 @@ Module.register("MMM-Eventbrite", {
                 name: event.name.text || "undefined",
                 summary: event.summary || "undefined",
                 logoOriginalUrl: event.logo ? event.logo.original.url : "undefined",
-                url: event.resource_uri || "undefined",
+                url: event.url || "undefined",
                 start: event.start.local || "undefined",
                 end: event.end.local || "undefined"
             }));
@@ -62,6 +62,13 @@ Module.register("MMM-Eventbrite", {
                 wrapper.appendChild(eventLogo);
             }
 
+            // Displaying the Event URL as text
+            if (event.url !== "undefined") {
+                var eventUrl = document.createElement("div");
+                eventUrl.innerHTML = `URL: ${event.url}`;
+                wrapper.appendChild(eventUrl);
+            }
+
             // QR Code for Event URL
             if (event.url !== "undefined") {
                 var qrCodeImage = new Image();
@@ -71,19 +78,18 @@ Module.register("MMM-Eventbrite", {
                 wrapper.appendChild(qrCodeImage);
             }
 
-            // Displaying the Event URL as text
-            if (event.url !== "undefined") {
-                var eventUrl = document.createElement("div");
-                eventUrl.innerHTML = `URL: ${event.url}`;
-                wrapper.appendChild(eventUrl);
-            }
-
+            // Formatting the start time
+            var startDateTime = new Date(event.start);
+            var formattedStart = startDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventStart = document.createElement("div");
-            eventStart.innerHTML = `Start: ${event.start}`;
+            eventStart.innerHTML = `Start: ${formattedStart} EST`;
             wrapper.appendChild(eventStart);
 
+            // Formatting the end time
+            var endDateTime = new Date(event.end);
+            var formattedEnd = endDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
             var eventEnd = document.createElement("div");
-            eventEnd.innerHTML = `End: ${event.end}`;
+            eventEnd.innerHTML = `End: ${formattedEnd} EST`;
             wrapper.appendChild(eventEnd);
         } else {
             wrapper.innerHTML = "Loading events...";
@@ -91,4 +97,5 @@ Module.register("MMM-Eventbrite", {
 
         return wrapper;
     }
+
 });
