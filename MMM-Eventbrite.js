@@ -3,7 +3,8 @@ Module.register("MMM-Eventbrite", {
         updateInterval: 1800000, // How often to fetch new data (in milliseconds)
         rotateInterval: 25000, // How often to switch between events (in milliseconds)
         apiKey: "",
-        organizerId: ""
+        organizerId: "",
+        doNotShow: [] // Default to an empty array if not specified
     },
 
     getStyles: function() {
@@ -30,7 +31,8 @@ Module.register("MMM-Eventbrite", {
 
     socketNotificationReceived: function(notification, payload) {
         if (notification === "EVENT_DATA_RESULT") {
-            this.events = payload.events.map(event => ({
+            // First map the events to a simplified structure
+            let events = payload.events.map(event => ({
                 name: event.name.text || "undefined",
                 summary: event.summary || "undefined",
                 logoOriginalUrl: event.logo ? event.logo.original.url : "undefined",
@@ -38,9 +40,36 @@ Module.register("MMM-Eventbrite", {
                 start: event.start.local || "undefined",
                 end: event.end.local || "undefined"
             }));
+
+            // Now filter the events based on doNotShow config, if applicable
+            events = this.filterEvents(events);
+
+            this.events = events;
             this.currentEventIndex = 0; // Reset to start from the first event upon receiving new data
             this.updateDom(1000); // Use animation for transition
         }
+    },
+
+    filterEvents: function(events) {
+        if (!this.config.doNotShow || !Array.isArray(this.config.doNotShow)) {
+            return events; // Return early if doNotShow is not configured
+        }
+
+        return events.filter(event => {
+            for (let pattern of this.config.doNotShow) {
+                try {
+                    let regex = new RegExp(pattern);
+                    if (regex.test(event.name)) {
+                        return false; // Exclude this event
+                    }
+                } catch (e) {
+                    console.log("Warning: Invalid regex in doNotShow config:", pattern);
+                    // Optionally, continue to the next pattern or return true to keep the event
+                    return true; // Keep the event, assuming the pattern is invalid
+                }
+            }
+            return true; // Include this event if none of the patterns matched
+        });
     },
 
     getDom: function() {
