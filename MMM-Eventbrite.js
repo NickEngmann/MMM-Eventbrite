@@ -115,18 +115,37 @@ Module.register("MMM-Eventbrite", {
             }
 
             var startDateTime = new Date(event.start);
-            var formattedStart = startDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+            var formattedStart = startDateTime.toLocaleString('en-US', {
+                timeZone: 'America/New_York', // Adjusted to automatically handle DST
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            });
             var eventStart = document.createElement("div");
-            eventStart.className = "event-start"; // Add class name
+            eventStart.className = "event-start";
             eventStart.innerHTML = `Start: ${formattedStart}`;
             wrapper.appendChild(eventStart);
 
             var endDateTime = new Date(event.end);
-            var formattedEnd = endDateTime.toLocaleString('en-US', { timeZone: 'EST', month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true });
+            var formattedEnd = endDateTime.toLocaleString('en-US', {
+                timeZone: 'America/New_York', // Adjusted to automatically handle DST
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+            });
             var eventEnd = document.createElement("div");
-            eventEnd.className = "event-end"; // Add class name
+            eventEnd.className = "event-end";
             eventEnd.innerHTML = `End: ${formattedEnd}`;
             wrapper.appendChild(eventEnd);
+
         } else {
             wrapper.innerHTML = "Loading events...";
         }
