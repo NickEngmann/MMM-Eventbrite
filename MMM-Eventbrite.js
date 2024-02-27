@@ -4,6 +4,7 @@ Module.register("MMM-Eventbrite", {
         rotateInterval: 25000, // How often to switch between events (in milliseconds)
         apiKey: "",
         organizerId: "",
+        timeZone: "America/New_York",
         doNotShow: [] // Default to an empty array if not specified
     },
 
@@ -116,7 +117,7 @@ Module.register("MMM-Eventbrite", {
 
             var startDateTime = new Date(event.start);
             var formattedStart = startDateTime.toLocaleString('en-US', {
-                timeZone: 'America/New_York', // Adjusted to automatically handle DST
+                timeZone: config.timeZone, // Adjusted to automatically handle DST
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',
@@ -132,7 +133,7 @@ Module.register("MMM-Eventbrite", {
 
             var endDateTime = new Date(event.end);
             var formattedEnd = endDateTime.toLocaleString('en-US', {
-                timeZone: 'America/New_York', // Adjusted to automatically handle DST
+                timeZone: config.timeZone, // Adjusted to automatically handle DST
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric',
