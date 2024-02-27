@@ -1,12 +1,10 @@
 # MMM-Eventbrite
 
-The MMM-Eventbrite module displays upcoming events from Eventbrite on your Magic Mirror. This module allows you to specify an organizer and display their public events, keeping you informed about upcoming events without leaving your mirror.
+The MMM-Eventbrite module displays upcoming events from Eventbrite on your Magic Mirror. This module allows you to specify an organizer and display their public events, keeping you informed about upcoming events without leaving your mirror. Additionally, it provides the flexibility to exclude specific events from being displayed based on their names using regular expressions.
 
 ## Screenshot
 
-
 ![MMM-Eventbrite Screenshot](img/preview.jpeg)
-
 
 ## Installation
 
@@ -44,17 +42,19 @@ To use the MMM-Eventbrite module, you need to add it to the `config/config.js` f
     position: "middle_center",
     config: {
         apiKey: "YOUR_EVENTBRITE_API_KEY",
-        organizerId: "YOUR_ORGANIZER_ID"
+        organizerId: "YOUR_ORGANIZER_ID",
+        doNotShow: ["^Public Craft Night"]
     }
 }
 ```
 
 ### Configuration Options
 
-| Option         | Description                                           |
-| -------------- | ----------------------------------------------------- |
-| `apiKey`       | **Required** Your Eventbrite API key.                 |
-| `organizerId`  | **Required** The Eventbrite organizer ID.             |
+| Option        | Description                                                                                       |
+|---------------|---------------------------------------------------------------------------------------------------|
+| `apiKey`      | **Required** Your Eventbrite API key.                                                             |
+| `organizerId` | **Required** The Eventbrite organizer ID.                                                         |
+| `doNotShow`   | An array of regular expressions for event names that you wish to exclude from being displayed.    |
 
 ## Dependencies
 
@@ -64,7 +64,8 @@ To use the MMM-Eventbrite module, you need to add it to the `config/config.js` f
 ## Notes
 
 - Make sure to replace `"YOUR_EVENTBRITE_API_KEY"` and `"YOUR_ORGANIZER_ID"` with your actual Eventbrite API key and organizer ID.
-- You can find your API key and organizer ID in your Eventbrite account settings.
+- The `doNotShow` field allows you to specify patterns for event names that should not be displayed. For example, `["^Public Craft Night"]` excludes events starting with "Public Craft Night".
+- Regular expressions in the `doNotShow` array must be properly escaped if they contain characters that have special meanings in regex syntax.
 
 ## Updating
 
