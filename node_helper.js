@@ -6,23 +6,38 @@ module.exports = NodeHelper.create({
         console.log(this.name + " helper started...");
     },
 
-    getEventData: function(apiKey, organizerId) {
-        var config = {
-            method: 'get',
-            url: `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=live`,
-            headers: { 
-                'Authorization': 'Bearer ' + apiKey 
-            }
+    getEventData: async function(apiKey, organizerId) {
+        const headers = {
+            'Authorization': 'Bearer ' + apiKey
         };
 
-        axios(config)
-        .then((response) => {
-            // Assuming the response data structure is correct
-            this.sendSocketNotification("EVENT_DATA_RESULT", response.data);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        let allEvents = [];
+        let continuation = null;
+        let hasMore = true;
+
+        try {
+            // Fetch all pages of events
+            while (hasMore) {
+                let url = `https://www.eventbriteapi.com/v3/organizers/${organizerId}/events/?status=live`;
+                if (continuation) {
+                    url += `&continuation=${continuation}`;
+                }
+
+                const response = await axios.get(url, { headers });
+                const events = response.data.events || [];
+                allEvents = allEvents.concat(events);
+
+                // Check for more pages
+                const pagination = response.data.pagination || {};
+                hasMore = pagination.has_more_items || false;
+                continuation = pagination.continuation;
+            }
+
+            // Send all events back
+            this.sendSocketNotification("EVENT_DATA_RESULT", { events: allEvents });
+        } catch (error) {
+            console.log("Error fetching Eventbrite data:", error.message);
+        }
     },
 
     socketNotificationReceived: function(notification, payload) {
